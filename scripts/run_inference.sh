@@ -12,7 +12,7 @@ dataset=${1//-/_}
 task_name=$2
 shift 2
 
-dataset_dir="data/tokenized_datasets"
+# dataset_dir="data/tokenized_datasets"
 
 case $dataset in
 mimic*)
@@ -23,7 +23,8 @@ mimic*)
     exit 1
     ;;
 esac
-dataset_dir="data/tokenized_datasets/$dataset"
+# dataset_dir="data/tokenized_datasets/$dataset"
+dataset_dir="/data/models/zj2398/ethos/"
 
 clear
 if [[ ! -d $dataset_dir ]]; then
@@ -69,10 +70,12 @@ ethos_infer \
     task=${task_name} \
     model_fp=${dataset_dir}/models/${model}/${model_variant} \
     input_dir=${dataset_dir}/test \
-    output_dir=results/${task_name}/${dataset}_${model}_${model_variant%_*} \
+    output_dir=${dataset_dir}/results/${task_name}/${dataset}_${model}_${model_variant%_*} \
     output_fn=${res_name_prefix}rep_size_${rep_num}_\$(date +%Y-%m-%d_%H-%M-%S) \
     $* \
-    n_gpus=\${NUM_GPUS}
+    n_gpus=4 \
+    rep_num=4 \
+    subset=0.2
 "
 
 module load singularity 2>/dev/null

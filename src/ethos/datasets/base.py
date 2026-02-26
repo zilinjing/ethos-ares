@@ -94,14 +94,18 @@ class TimelineDataset(th.utils.data.Dataset):
         return len(self.tokens) - self.timeline_size
 
     def __getitem__(self, idx: int) -> tuple[th.Tensor | tuple, th.Tensor]:
+        # get context of the patient at the current idx
         pt_ctx = self._get_patient_context(idx)
         timeline = self.tokens[idx : idx + self.timeline_size + 1]
 
         if self.is_encoder_decoder:
             return (pt_ctx, timeline[:-1]), timeline[1:]
 
+        # x = stat features, t0,t1,...,tn-1
+        # y = stat features, t1,...,tn-1,tn
         x = th.cat((pt_ctx, timeline[:-1]))
         y = th.cat((pt_ctx, timeline[1:]))
+        # Mask context in labels (don't compute loss on static features)
         y[: self.context_size] = -100
         return x, y
 
@@ -110,6 +114,7 @@ class TimelineDataset(th.utils.data.Dataset):
         time_at_start = self.times[idx].item()
 
         static_tokens = []
+        # deal with static features
         for token in self.static_data[patient_id].values():
             if token["code"][0] == ST.DOB:
                 age = timedelta(microseconds=time_at_start - token["time"][0])

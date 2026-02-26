@@ -114,5 +114,5 @@ stages:
     agg_to: ${output_dir}/${intervals_fn}
     skip: ${is_not_null:${vocab}}
 
-  - name: CodeCounter
+  - name:  v
     agg_to: ${output_dir}/${code_counts_fn}

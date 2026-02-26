@@ -1,0 +1,168 @@
+_wandb:
+    value:
+        cli_version: 0.24.1
+        e:
+            i8xhfba1wntus64urw1l71k6v3y021r9:
+                args:
+                    - data_fp=/data/models/zj2398/ethos//train
+                    - val_size=6
+                    - batch_size=32
+                    - n_positions=2048
+                    - n_layer=6
+                    - n_head=12
+                    - n_embd=768
+                    - dropout=0.3
+                    - lr=0.0006
+                    - min_lr=0.00001
+                    - log_interval=10
+                    - eval_interval=1500
+                    - gradient_accumulation_steps=16
+                    - warmup_iters=5000
+                    - max_iters=200000
+                    - lr_decay_iters=100000
+                    - wandb_log=true
+                    - wandb_project=ethos-meds-mimic
+                    - wandb_run_name=layer_6_do_0.3
+                    - out_dir=/data/models/zj2398/ethos//models/layer_6_do_0.3
+                cpu_count: 112
+                cpu_count_logical: 224
+                cudaVersion: "12.8"
+                disk:
+                    /:
+                        total: "1888423047168"
+                        used: "1186017673216"
+                email: zj2398@columbia.edu
+                executable: /data/anaconda3/envs/ethos/bin/python3.12
+                git:
+                    commit: 2d54383997318eb52f3d47b5969a66fc166b71ff
+                    remote: https://github.com/ipolharvard/ethos-ares
+                gpu: NVIDIA H100 NVL
+                gpu_count: 4
+                gpu_nvidia:
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "100485038080"
+                      name: NVIDIA H100 NVL
+                      uuid: GPU-5ed211d4-b8c5-ae93-395e-a2faeb470421
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "100485038080"
+                      name: NVIDIA H100 NVL
+                      uuid: GPU-8f3046fb-694e-fa5d-9e4f-cb0a43e821da
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "100485038080"
+                      name: NVIDIA H100 NVL
+                      uuid: GPU-09ab7fe0-9269-b351-044c-d72528f53fcc
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "100485038080"
+                      name: NVIDIA H100 NVL
+                      uuid: GPU-8e013537-5947-418d-0b2c-f2c7b279b860
+                host: MI-SJ001
+                memory:
+                    total: "2164148359168"
+                os: Linux-5.15.0-164-generic-x86_64-with-glibc2.35
+                program: /data/anaconda3/envs/ethos/bin/ethos_train
+                python: CPython 3.12.12
+                root: /home/zj2398@mc.cumc.columbia.edu/ethos-ares/scripts
+                startedAt: "2026-02-05T03:30:18.432500Z"
+                writerId: i8xhfba1wntus64urw1l71k6v3y021r9
+        m: []
+        python_version: 3.12.12
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 49
+                - 50
+                - 53
+            "2":
+                - 1
+                - 5
+                - 11
+                - 49
+                - 50
+                - 53
+            "3":
+                - 13
+                - 15
+                - 16
+            "4": 3.12.12
+            "5": 0.24.1
+            "6": 4.52.4
+            "12": 0.24.1
+            "13": linux-x86_64
+activation:
+    value: gelu
+backend:
+    value: nccl
+batch_size:
+    value: 32
+beta1:
+    value: 0.9
+beta2:
+    value: 0.95
+data_fp:
+    value: /data/models/zj2398/ethos//train
+dataset:
+    value: ethos
+device:
+    value: cpu
+dropout:
+    value: 0.3
+dtype:
+    value: bfloat16
+eval_interval:
+    value: 1500
+grad_clip:
+    value: 1
+gradient_accumulation_steps:
+    value: 4
+log_interval:
+    value: 10
+lr:
+    value: 0.0006
+lr_decay_iters:
+    value: 100000
+max_iters:
+    value: 200000
+min_lr:
+    value: 1e-05
+model_num_params:
+    value: 45967104
+model_num_params_total:
+    value: 47539968
+model_type:
+    value: decoder
+n_embd:
+    value: 768
+n_head:
+    value: 12
+n_layer:
+    value: 6
+n_positions:
+    value: 2048
+no_compile:
+    value: false
+out_dir:
+    value: /data/models/zj2398/ethos//models/layer_6_do_0.3
+resume:
+    value: false
+val_size:
+    value: 6
+vocab_size:
+    value: 4542
+vocab_size_train:
+    value: 4544
+wandb_log:
+    value: true
+wandb_project:
+    value: ethos-meds-mimic
+wandb_run_name:
+    value: layer_6_do_0.3
+warmup_iters:
+    value: 5000
+weight_decay:
+    value: 0.1

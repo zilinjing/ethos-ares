@@ -12,7 +12,7 @@ rep_num: 1
 save_generated_tokens: false
 
 device: "cuda" # "cuda" or "cpu"
-n_jobs: 1 # jobs per cpu or per gpu
+n_jobs: 4 # jobs per cpu or per gpu
 n_gpus: 1
 no_compile: false # compilation might not work on older systems
 

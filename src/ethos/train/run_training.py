@@ -69,10 +69,12 @@ def main(cfg: DictConfig):
         master_process = True
         seed_offset = 0
 
+    # n_positions = maximum length, by default 2048
     tokens_per_iter = cfg.gradient_accumulation_steps * cfg.batch_size * cfg.n_positions
 
     if master_process:
         logger.info(f"Tokens per iteration per worker: {tokens_per_iter:,}")
+        print(cfg.gradient_accumulation_steps,cfg.batch_size,cfg.n_positions)
         out_dir.mkdir(parents=True, exist_ok=True)
     ctx = setup_torch(device, cfg.dtype, 42 + seed_offset)
 
@@ -85,6 +87,7 @@ def main(cfg: DictConfig):
 
     vocab_size = math.ceil(len(vocab) / 64) * 64
 
+    # if cfg.val_size=6, let final 6 million tokens to be validation
     train_dataset, val_dataset = train_dataset.train_test_split(cfg.val_size)
     train_dataloader, val_dataloader = (
         DataLoader(
@@ -123,6 +126,7 @@ def main(cfg: DictConfig):
         optimizer_state = checkpoint["optimizer"]
         wandb_path = checkpoint["wandb_path"]
     else:
+        # by default model_type is decoder
         config = GPT2Config(
             vocab_size=vocab_size,
             n_positions=cfg.n_positions,
@@ -196,12 +200,20 @@ def main(cfg: DictConfig):
             }
         )
         run_id = wandb_path.split("/")[-1] if wandb_path is not None else None
+        # wandb_run = wandb.init(
+        #     project=cfg.wandb_project,
+        #     name=cfg.wandb_run_name,
+        #     config=cfg_dict,
+        #     tags=[dataset_name],
+        #     resume_from=f"{run_id}?_step={iter_num}" if run_id is not None else None,
+        # )
         wandb_run = wandb.init(
             project=cfg.wandb_project,
             name=cfg.wandb_run_name,
             config=cfg_dict,
             tags=[dataset_name],
-            resume_from=f"{run_id}?_step={iter_num}" if run_id is not None else None,
+            id=run_id,                    # Use the same run ID
+            resume="allow" if run_id else None,  # Resume if run exists, create new otherwise
         )
         online_logger = wandb
 

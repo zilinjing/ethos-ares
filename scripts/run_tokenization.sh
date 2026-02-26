@@ -36,6 +36,21 @@ ethos_tokenize -m worker='range(0,7)' \
     output_dir=$output_dir \
     out_fn=train
 
+# ethos_tokenize -m worker='range(0,64)' \
+#     input_dir=/data/raw_data/mimic/files/mimiciv/meds_v0.6/3.1/etho_meds/held_out \
+#     output_dir=/data/models/zj2398/ethos/tokenized/ \
+#     out_fn=test
+
+torchrun --no_python --standalone --nproc_per_node=4 ethos_train \
+  data_fp=/data/models/zj2398/ethos/tokenized/train \
+  val_size=6 \ # uses the last 6M tokens of train as the validation dataset
+  batch_size=$BATCH_SIZE \
+  max_epochs=300 \
+  out_dir=/data/models/zj2398/ethos/model # the path to save model checkpoints
+
+
+
+
 ethos_tokenize -m worker='range(0,2)' \
     input_dir=$input_dir/test \
     vocab=$output_dir/train \

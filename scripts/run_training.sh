@@ -11,14 +11,16 @@ export OMP_NUM_THREADS=20
 dataset="mimic_ed"
 dataset_name="mimic"
 
-data_path=data/tokenized_datasets/$dataset
-clear
-if [[ ! -d $data_path ]]; then
-    echo "Dataset directory not found: $data_path"
-    exit 1
-fi
+# data_path=data/tokenized_datasets/$dataset
+# clear
+# if [[ ! -d $data_path ]]; then
+#     echo "Dataset directory not found: $data_path"
+#     exit 1
+# fi
 
-shift 1
+# shift 1
+
+data_path="/data/models/zj2398/ethos/"
 
 BATCH_SIZE=32
 N_POSITIONS=2048
@@ -50,7 +52,7 @@ export TORCHINDUCTOR_CACHE_DIR=/ethos/torchinductor_cache
 "
 
 script_body="
-torchrun --no_python --standalone --nproc_per_node=\${NUM_GPUS} ethos_train \
+torchrun --no_python --standalone --nproc_per_node=4 ethos_train \
   data_fp=$data_path/train \
   val_size=6 \
   batch_size=$BATCH_SIZE \
@@ -67,11 +69,8 @@ torchrun --no_python --standalone --nproc_per_node=\${NUM_GPUS} ethos_train \
   warmup_iters=5000 \
   max_iters=200000 \
   lr_decay_iters=100000 \
-  wandb_log=true \
-  wandb_project="ethos-meds-$dataset_name" \
-  wandb_run_name=$model_name \
   $* \
-  out_dir="${data_path}/models/${model_name}"
+  out_dir="${data_path}/models/${model_name}_draft"
 "
 
 module load singularity 2>/dev/null

@@ -147,3 +147,43 @@ def main(cfg: DictConfig):
 
 if __name__ == "__main__":
     main()
+'''
+ethos_infer \
+    task=icu_admission \
+    model_fp=$model_dir/$model/best_model.pt \
+    input_dir=$dataset_dir/test \
+    output_dir=results/$task_name/$dataset_$model \
+    output_fn=rep_size_8\$(date +%Y-%m-%d_%H-%M-%S) \
+    rep_num=8 \
+    subset=0.4
+    
+        case Task.ICU_MORTALITY:
+            return ICUMortalityDataset
+        case Task.READMISSION:
+            return ReadmissionDataset
+        case Task.DRG_PREDICTION:
+            return DrgPredictionDataset
+        case Task.SOFA_PREDICTION:
+            return SofaPredictionDataset
+        case Task.ICU_READMISSION:
+            return ICUReadmissionDataset
+
+                HOSPITAL_MORTALITY = "hospital_mortality"
+    HOSPITAL_MORTALITY_SINGLE = "hospital_mortality_single"
+    READMISSION = "readmission"
+
+    DRG_PREDICTION = "drg"
+    SOFA_PREDICTION = "sofa"
+    ICU_MORTALITY = "icu_mortality"
+
+    ICU_READMISSION = "icu_readmission"
+
+    ICU_ADMISSION = "icu_admission"
+    ICU_ADMISSION_SINGLE = "icu_admission_single"
+
+    # from the ED benchmark paper
+    ED_HOSPITALIZATION = "ed_hospitalization"
+    ED_CRITICAL_OUTCOME = "ed_critical_outcome"
+    # the one below is called "ED reattendance" in the ED-Benchmark paper
+    ED_REPRESENTATION = "ed_representation"
+'''
